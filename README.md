@@ -1,29 +1,30 @@
-![CI Pipeline](https://github.com/stefan931025-sys/cross-asset-momentum-carry/actions/workflows/ci.yml/badge.svg)
+# Cross-Asset Momentum & Carry Alpha Engine
 
-# Cross-Asset Momentum & Carry Alpha Engine[span_5](start_span)[span_5](end_span)
-
-[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
+[![Cross-Asset Momentum CI](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/stefan931025-sys/cross-asset-momentum-carry)
+[![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Description[span_6](start_span)[span_6](end_span)
-Systematic multi-factor alpha generation engine combining time-series momentum, carry yield differentials, and target volatility position scaling across liquid asset classes[span_7](start_span)[span_7](end_span).
+A systematic multi-factor alpha generation engine combining time-series momentum, carry yield differentials, and target volatility position scaling across liquid asset classes.
 
 ---
 
-## 📌 Strategy Design[span_8](start_span)[span_8](end_span)
+## Strategy Design & Core Features
 
-* **Multi-Factor Alpha Construction:** Combines normalized momentum Z-scores (60% weight) and yield carry differentials (40% weight)[span_9](start_span)[span_9](end_span).
-* **Volatility Targeting:** Dynamically scales leverage and position sizes based on rolling annualized asset volatility relative to portfolio target risk[span_10](start_span)[span_10](end_span).
-* **Risk Controls:** Enforces hard caps on leverage and drawdown parameters[span_11](start_span)[span_11](end_span).
+* **Multi-Factor Alpha Construction:** Combines normalized momentum $Z\text{-scores}$ (60% weight) and yield carry differentials (40% weight).
+* **Volatility Targeting:** Dynamically scales leverage and position sizes based on rolling annualized asset volatility relative to portfolio target risk.
+* **Risk Controls:** Enforces hard portfolio caps on leverage, asset concentration, and maximum drawdown parameters.
 
 ---
 
-## 🚀 Quickstart[span_12](start_span)[span_12](end_span)
+## Mathematical Specifications
 
-```bash
-# Clone repository
-git clone [https://github.com/stefan931025-sys/cross-asset-momentum-carry.git](https://github.com/stefan931025-sys/cross-asset-momentum-carry.git)
-cd cross-asset-momentum-carry
+### 1. Multi-Factor Alpha Score
+$$\alpha_i = w_{\text{mom}} Z(\text{Momentum}_i) + w_{\text{carry}} Z(\text{Carry}_i)$$
 
-# Run multi-factor alpha engine from src directory
-python src/multi_factor_alpha.py
+### 2. Volatility-Targeted Position Sizing
+$$w_i^* = \frac{\sigma_{\text{target}}}{\sigma_{i,t}} \cdot \tanh(\alpha_i)$$
+
+---
+
+## System Architecture & Data Flow
+
