@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Module: core/macro_overlay.py
 Description: Macroeconomic Regime Classifier and Risk-Scaling Overlay for Cross-Asset Momentum & Carry Engine.
@@ -13,11 +15,11 @@ class MacroRegimeOverlay:
     Classifies macroeconomic regimes using rolling indicators and adjusts factor weights
     dynamically to mitigate drawdowns during liquidity crunches or high-inflation shocks.
     """
-    def __init__(self, n_states: int = 3, covariance_type: str = "full"):
+    def __init__(self, n_states: int = 3, covariance_type: str = "full") -> None:
         self.n_states = n_states
         self.model = GaussianHMM(n_components=n_states, covariance_type=covariance_type, n_iter=1000, random_state=42)
         self.scaler = StandardScaler()
-        self.regime_labels = {}
+        self.regime_labels: dict[str, int] = {}
 
     def fit_predict_regimes(self, macro_features: pd.DataFrame) -> np.ndarray:
         """
@@ -33,7 +35,7 @@ class MacroRegimeOverlay:
         """
         Adjusts factor weights based on the active regime state:
         - State 0 (Expansion): Overweight momentum, normal carry.
-        - State 1 (Slowdown / Stagflation): Dampen momentum, reduce carry exposure.
+        - State 1 (Slowdown / Stagflation): Dampen momentum, reduce carry.
         - State 2 (Liquidity Crisis): Defensive positioning, aggressive risk reduction.
         """
         if regime_state == 0:
@@ -46,12 +48,11 @@ class MacroRegimeOverlay:
             # Crisis: Defensive stance, major risk reduction
             return 0.1 * momentum_weights + 0.1 * carry_weights
 
-
 class StressTestingModule:
     """
     Applies dynamic volatility scaling and simulates historical crisis shock overlays.
     """
-    def __init__(self, target_volatility: float = 0.10):
+    def __init__(self, target_volatility: float = 0.10) -> None:
         self.target_volatility = target_volatility
 
     def volatility_scaling(self, returns: pd.Series, window: int = 63) -> pd.Series:
